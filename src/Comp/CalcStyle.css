@@ -1,0 +1,88 @@
+/* main container */
+.calc_Container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: 35rem;
+    width: 28rem;
+    border-radius: 16px;
+    border: 1px solid rgba(46, 45, 45, 0.31);
+
+	/* background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(15px);
+	backdrop-filter: blur(12px);
+	-webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+	box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4); */
+
+}
+
+/*  input dispaly container */
+.displayContainer {
+    height: 20%;
+    margin: auto;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+
+
+}
+
+/* input styling */
+.outPut {
+    width: 100%;
+	padding: 2%;
+	text-align: right;
+    color: rgb(255, 255, 255);
+    background: rgba(46, 45, 45, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
+}
+/* top input field */
+.calOutputField {
+    /* background-color: black; */
+    border-radius: 16px 16px 0 0;
+    font-size: 1.5rem;
+    font-weight: bolder;
+
+}
+/* botto, display field */
+.displayField{
+    /* background-color: black; */
+    border-radius: 0 0 0 0;
+    font-weight: bold;
+
+}
+
+/* table container */
+.butt_Container {
+    width: 100%;
+    height: 100%;
+
+}
+
+/* table styling */
+.butt_Table {
+    width: 100%;
+    height: 100%;
+    background: rgba(46, 45, 45, 0.1);
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
+    /* border: 1px solid rgba(46, 45, 45, 0.31); */
+    /* border: 1px solid rgba(255, 255, 255, 0.02); */
+	/* border-right: 1px solid rgba(255, 255, 255, 0.02); */
+
+}
+
+.button_Box {
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    width: 25%;
+}
+.button_Box:hover {
+    -webkit-transition: 0.2s;
+	transition: 0.1s;
+	background: rgba(255, 255, 255, 0.247);
+    border-radius: 16px;
+
+}
