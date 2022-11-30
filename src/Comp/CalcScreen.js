@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiDelete } from "react-icons/fi";
 import { GrFormAdd, GrFormSubtract } from "react-icons/gr";
-import { TbSquareRoot2 } from 'react-icons/tb';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import './CalcStyle.css';
 
 export default function CalcScreen() {
@@ -59,6 +59,14 @@ export default function CalcScreen() {
     const [isNegative, setIsNegative] = useState(false);                                    // user changed the value pos/neg
     const [lastChar, setLastChar] = useState();
 
+    const [clipBoard, setCliprBoard] = useState({ value: '', copied: false });
+
+    useEffect(() => {
+        if ( !clipBoard.copied ) { return } 
+        setTimeout(() => setCliprBoard({ value: clipBoard.value, copied: false}), 3000);
+    
+    }, [clipBoard])
+    
     //display calculator
     const calcFace = () => {
         return (
@@ -90,7 +98,7 @@ export default function CalcScreen() {
     const iconDisplay = (val) => {
         if ( val === 'D' ) { return <FiDelete /> }
         if ( val === '+/-' ) { 
-            if ( userInputDisplay.charAt(0) === '-' && isNegative === true || userInputDisplay.charAt(userInputDisplay.lastIndexOf(' ') + 1) === '-' && isNegative === true ) {
+            if ( (userInputDisplay.charAt(0) === '-' && isNegative === true) || (userInputDisplay.charAt(userInputDisplay.lastIndexOf(' ') + 1) === '-' && isNegative === true) ) {
                 return <GrFormAdd />
             } else if ( userInputDisplay.length > 2 && userInputDisplay.charAt(userInputDisplay.length-1) === '-' ) {
                 return <GrFormAdd />
@@ -112,10 +120,10 @@ export default function CalcScreen() {
         let oper = ['+', '-', '*', '/', '%', '\u221A'];
         let squr = ['1/X', 'X2'];
         let clean = ['CE', 'C', 'D'];
-        let numVal = num.filter((cell) => cell == x);                                                                   // find what user pressed
-        let calcVal = oper.filter((cell) => cell == x);
-        let sqVal = squr.filter((cell) => cell == x);
-        let cleanVal = clean.filter((cell) => cell == x);
+        let numVal = num.filter((cell) => cell === x);                                                                   // find what user pressed
+        let calcVal = oper.filter((cell) => cell === x);
+        let sqVal = squr.filter((cell) => cell === x);
+        let cleanVal = clean.filter((cell) => cell === x);
         let int = userInputDisplay + x;
         let last = int.charAt(int.length-1);
         setLastChar(last);
@@ -152,7 +160,7 @@ export default function CalcScreen() {
                 break;
             // user pressed one of the squre operators
             case ( sqVal.length === 1 ):
-                if ( userInputDisplay == 0 ) {
+                if ( userInputDisplay === 0 ) {
                     setUserInputDisplay('0');
                     setIsSolved(false);
                 }
@@ -357,17 +365,29 @@ export default function CalcScreen() {
                 break;
         }
         
-    }
+    };
+
+    const saveToClipboard = () => {
+        console.log('Hello');
+    };
 
   return (
     <div className='calc_Container'>
-        <div className='displayContainer' style={{ userSelect: 'none' }}>
-            <input 
-                value={ typeof calculationDisplay === 'string' ? calculationDisplay : calculationDisplay.num + calculationDisplay.op + calculationDisplay.of } 
-                className='outPut calOutputField' 
-                readOnly 
-            />
-            <input value={ userInputDisplay } className='outPut displayField' readOnly/>
+        { clipBoard.copied ? <div className='messCopied'>Copied</div> : null }
+        <div className='displayContainer' style={{ userSelect: 'none' }} onto={ () => saveToClipboard() }>
+            <CopyToClipboard 
+                text={ typeof calculationDisplay === 'string' ? calculationDisplay : calculationDisplay.num + calculationDisplay.op + calculationDisplay.of } 
+                onCopy={ () => setCliprBoard({ value: typeof calculationDisplay === 'string' ? calculationDisplay : calculationDisplay.num + calculationDisplay.op + calculationDisplay.of, copied: true })}>
+                    <input 
+                        value={ typeof calculationDisplay === 'string' ? calculationDisplay : calculationDisplay.num + calculationDisplay.op + calculationDisplay.of } 
+                        className='outPut calOutputField' 
+                        readOnly 
+                    />
+            </CopyToClipboard>
+            
+            <CopyToClipboard text={ userInputDisplay } onCopy={ () => setCliprBoard({ value: userInputDisplay, copied: true })}>
+                <input value={ userInputDisplay } className='outPut displayField' readOnly/>
+            </CopyToClipboard>
         </div>
         <div className='butt_Container'>
         { calcFace() }
